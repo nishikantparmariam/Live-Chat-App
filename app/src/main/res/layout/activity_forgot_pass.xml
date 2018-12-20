@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".ForgotPass">
+    <include
+        android:id="@+id/navbar"
+        layout="@layout/navbar"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_below="@+id/navbar"
+        android:padding="40dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Don't worry, we will fix it."
+            android:layout_gravity="center_horizontal"
+            android:textColor="#888"
+            android:layout_margin="20dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:fontFamily="sans-serif" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Type your registered email address, we will send a password reset link."
+            android:layout_gravity="center_horizontal"
+            android:textColor="#888"
+            android:layout_margin="20dp"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:fontFamily="sans-serif" />
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:hint="Registered email.."
+            android:layout_marginTop="5dp"
+            android:id="@+id/email"
+            app:met_floatingLabel="normal"
+            android:textSize="20sp"
+            android:textColor="#000"
+            android:textColorHint="#aaa"
+            />
+
+        <Button
+            android:id="@+id/buttonfp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorPrimary"
+            android:padding="10dp"
+            android:text="Send Password Reset Link"
+            android:shadowColor="#00aacc"
+            android:shadowDx="0"
+            android:shadowDy="3"
+            android:shadowRadius="7"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign Up"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#888"
+            android:layout_marginTop="40dp"
+            android:textSize="20sp"
+            android:id="@+id/subfp"
+            android:textStyle="bold"
+            app:fontFamily="sans-serif"
+            android:layout_below="@id/buttonfp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#888"
+            android:layout_marginTop="40dp"
+            android:layout_below="@id/subfp"
+            android:textSize="20sp"
+            android:id="@+id/sibfp"
+            android:textStyle="bold"
+            app:fontFamily="sans-serif" />
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".LoginActivity">
+    <include
+        android:id="@+id/navbar"
+        layout="@layout/navbar"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_below="@+id/navbar"
+        android:padding="40dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign In"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#888"
+            android:layout_margin="20dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:fontFamily="sans-serif" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:hint="Email"
+
+            android:layout_marginTop="5dp"
+            android:id="@+id/email"
+            app:met_floatingLabel="normal"
+            android:textSize="20sp"
+            android:textColor="#000"
+            android:textColorHint="#aaa"
+            />
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:inputType="textPassword"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:hint="Password"
+            android:id="@+id/password"
+            android:layout_marginTop="5dp"
+            app:met_floatingLabel="normal"
+            android:textSize="20sp"
+            android:textColor="#000"
+            android:textColorHint="#aaa"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Forgot Password?"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#888"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            android:id="@+id/fpb"
+            android:textStyle="bold"
+            app:fontFamily="sans-serif" />
+        <Button
+            android:id="@+id/buttonlogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimary"
+            android:padding="10dp"
+            android:text="Login"
+            android:shadowColor="#00aacc"
+            android:shadowDx="0"
+            android:shadowDy="3"
+            android:shadowRadius="7"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New User? Sign Up"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#888"
+            android:layout_marginTop="40dp"
+            android:textSize="20sp"
+            android:id="@+id/sub"
+            android:textStyle="bold"
+            app:fontFamily="sans-serif" />
+    </LinearLayout>
+</RelativeLayout>
