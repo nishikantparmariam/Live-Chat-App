@@ -18,7 +18,7 @@
             app:popupTheme="@style/MenuStyle"
             app:subtitleTextColor="#FFFFFF"
             app:titleTextColor="#FFFFFF"
-            android:background="#33CCFF">
+            android:background="@color/colorPrimary">
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -29,16 +29,16 @@
                 android:id="@+id/FN"
                 android:layout_marginLeft="25dp"
                 android:textColor="#FFFFFF"
-                ></TextView>
+                />
         </android.support.v7.widget.Toolbar>
         <android.support.design.widget.TabLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tab_layout"
-            android:background="#1ac6ff"
+            android:background="#08bffc"
             app:tabSelectedTextColor="#FFFFFF"
             app:tabIndicatorColor="#FFFFFF"
-            app:tabTextColor="#ccf2ff"></android.support.design.widget.TabLayout>
+            app:tabTextColor="#ccf2ff"/>
 
     </android.support.design.widget.AppBarLayout>
     <android.support.v4.view.ViewPager

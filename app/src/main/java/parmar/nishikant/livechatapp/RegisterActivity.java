@@ -46,8 +46,6 @@ public class RegisterActivity extends AppCompatActivity {
     FirebaseUser firebaseUser;
     FirebaseAuth auth;
     private DatabaseReference mDatabase;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,6 +111,7 @@ public class RegisterActivity extends AppCompatActivity {
                             hashMap.put("fullname",username);
                             hashMap.put("dpURL","default");
                             hashMap.put("points","0");
+                            hashMap.put("status","online");
                             mDatabase.child("user_info").child(userid).setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>(){
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {

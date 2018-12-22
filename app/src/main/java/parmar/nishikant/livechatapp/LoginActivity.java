@@ -17,6 +17,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import org.w3c.dom.Text;
@@ -26,6 +28,8 @@ public class LoginActivity extends AppCompatActivity {
     Button buttonlogin;
     FirebaseAuth auth;
     FirebaseUser firebaseUser;
+    DatabaseReference reference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                                         if(task.isSuccessful()){
                                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                            Toast.makeText(LoginActivity.this, "Logging in...", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(LoginActivity.this, "Logged in!!", Toast.LENGTH_LONG).show();
                                             startActivity(intent);
                                             finish();
                                         }else

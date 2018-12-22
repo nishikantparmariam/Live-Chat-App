@@ -5,15 +5,25 @@ public class User {
     private String fullname;
     private String dpURL;
     private String points;
-    public User(String id,String fullname,String dpURL,String points) {
+    private String status;
+    public User(String id,String fullname,String dpURL,String points,String status) {
         this.id= id;
         this.fullname = fullname;
         this.dpURL = dpURL;
         this.points = points;
+        this.status=status;
     }
     public User()
     {
 
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getId() {

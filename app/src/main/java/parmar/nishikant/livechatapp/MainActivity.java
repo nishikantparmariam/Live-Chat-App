@@ -37,10 +37,12 @@ public class MainActivity extends AppCompatActivity {
     FirebaseUser firebaseUser;
     DatabaseReference reference;
     Toolbar toolbar;
+    String check;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        check="NO";
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Live Chat App");
@@ -48,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         fullname = findViewById(R.id.FN);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("user_info").child(firebaseUser.getUid());
+        reference.child("status").setValue("online");
         ValueEventListener userinfolistner = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -76,6 +79,31 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
     }
     @Override
+    protected void onPause() {
+        super.onPause();
+            if(!check.equals("YES")){
+            try {
+                reference= FirebaseDatabase.getInstance().getReference();
+                String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                reference.child("user_info").child(user_id).child("status").setValue("offline");
+            } finally {
+                int no_work = 0;
+            }
+        }
+    }
+    @Override
+
+    protected void onResume() {
+        super.onResume();
+        try {
+            reference = FirebaseDatabase.getInstance().getReference("user_info").child(firebaseUser.getUid());
+            reference.child("status").setValue("online");
+            //Toast.makeText(this, "ONLINE", Toast.LENGTH_SHORT).show();
+        } finally {
+            int no_work = 0;
+        }
+    }
+    @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu,menu);
         return true;
@@ -84,6 +112,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.loginBtn:
+                check = "YES";
+                reference = FirebaseDatabase.getInstance().getReference("user_info").child(firebaseUser.getUid());
+                reference.child("status").setValue("offline");
                 FirebaseAuth.getInstance().signOut();
                 Toast.makeText(MainActivity.this, "Logging out...", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(MainActivity.this,StartActivity.class));
@@ -92,7 +123,6 @@ public class MainActivity extends AppCompatActivity {
                 //break;
             case R.id.myprofile:
                 startActivity(new Intent(MainActivity.this,ProfileActivity.class));
-                finish();
                 return true;
                 //break;
         }
