@@ -20,11 +20,11 @@
         android:layout_alignBottom="@+id/oneuserpp"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginBottom="23dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="21dp"
         android:layout_toEndOf="@+id/oneuserpp"
         android:layout_toRightOf="@+id/oneuserpp"
-        android:text=""
+        android:text="Username"
         android:textColor="#000"
         android:textSize="18sp" />
 
@@ -40,7 +40,7 @@
         android:layout_marginBottom="-1dp"
         android:layout_toEndOf="@+id/oneuserpp"
         android:layout_toRightOf="@+id/oneuserpp"
-        android:text=""
+        android:text="45 Points"
         android:textColor="#777"
         android:textSize="15sp" />
 
@@ -54,6 +54,6 @@
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
         android:textColor="#007700"
-        android:text=""
+        android:text="off"
         android:textStyle="bold" />
 </RelativeLayout>

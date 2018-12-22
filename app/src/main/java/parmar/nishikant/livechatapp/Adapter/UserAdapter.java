@@ -43,6 +43,19 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             Glide.with(mContext).load(user.getDpURL()).into(holder.oneuserpp);
         }
     }
+    public int getCountFromKey(String userKey){
+        int i=0;
+        int returningindex;
+        returningindex = 0;
+        for (User user:mUsers
+             ) {
+            if(user.getId().equals(userKey)){
+                returningindex = i;
+            }
+            i++;
+        }
+        return returningindex;
+    };
     @Override
     public int getItemCount() {
         return mUsers.size();
