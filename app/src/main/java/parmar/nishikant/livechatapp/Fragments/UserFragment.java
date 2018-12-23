@@ -8,9 +8,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -47,25 +49,41 @@ public class UserFragment extends Fragment {
         mUsers = new ArrayList<>();
         offlineUsers = new ArrayList<>();
         onlineUsers = new ArrayList<>();
-        readUsers();
+        //readUsers();
+        //Below method add/delete/update users
         listenForChanges();
+        if(userAdapter.getItemCount()==0){
+            TextView text_if_no_user = view.findViewById(R.id.text_if_no_user);
+            text_if_no_user.setText("Loading...");
+        }
         return view;
     }
     private void listenForChanges(){
         ChildEventListener childEventListener = new ChildEventListener() {
+            final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                String key = dataSnapshot.getKey();
+                User newUser = dataSnapshot.getValue(User.class);
+                assert firebaseUser != null;
+                if(!firebaseUser.getUid().equals(key)){
+                    addSingleItem(newUser);
+                }
+
+                //Toast.makeText(getContext(), key, Toast.LENGTH_SHORT).show();
+                //addSingleItem(newUser);
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
                 String key = dataSnapshot.getKey();
-                Toast.makeText(getContext(), key, Toast.LENGTH_SHORT).show();
+                User userwherechange = dataSnapshot.getValue(User.class);
+                if(!key.equals(firebaseUser.getUid())){
+                    updateSingleItem(key,userwherechange);
+                }
 
-                /*User user = dataSnapshot.getValue(User.class);
-                mUsers.add(user);*/
             }
 
             @Override
@@ -82,14 +100,25 @@ public class UserFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
+
         };
+        userAdapter = new UserAdapter(getContext(),mUsers);
+        recyclerView.setAdapter(userAdapter);
         DatabaseReference reference2 = FirebaseDatabase.getInstance().getReference("user_info");
         reference2.addChildEventListener(childEventListener);
     }
-    private void updateSingleItem(String userKey,String insideKey,String value) {
-        int positionwherechange = userAdapter.getCountFromKey(userKey);
-
+    private void addSingleItem(User newuser){
+        int size = userAdapter.getItemCount();
+        //Toast.makeText(getContext(),Integer.toString(size), Toast.LENGTH_SHORT).show();
+        mUsers.add(size,newuser);//add user at lasts
+        userAdapter.notifyItemInserted(size);
     }
+    private void updateSingleItem(String userKey,User changeduser) {
+        int positionFromKey = userAdapter.getUserAndPositionFromKey(userKey);
+        mUsers.set(positionFromKey, changeduser);
+        userAdapter.notifyItemChanged(positionFromKey);
+    }
+    /*
     private void readUsers(){
         final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("user_info");
@@ -110,7 +139,7 @@ public class UserFragment extends Fragment {
                         }
                         else {
                             offlineUsers.add(user);
-                        }*/
+                        }
 
                     }
                 }
@@ -123,7 +152,7 @@ public class UserFragment extends Fragment {
                 while(j<offlineUsers.size()){
                     mUsers.add(offlineUsers.get(j));
                     j++;
-                }*/
+                }
                 userAdapter = new UserAdapter(getContext(),mUsers);
                 recyclerView.setAdapter(userAdapter);
             }
@@ -134,6 +163,6 @@ public class UserFragment extends Fragment {
             }
         });
 
-    }
+    }*/
 
 }

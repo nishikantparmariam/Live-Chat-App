@@ -112,6 +112,7 @@ public class RegisterActivity extends AppCompatActivity {
                             hashMap.put("dpURL","default");
                             hashMap.put("points","0");
                             hashMap.put("status","online");
+                            hashMap.put("show_status","true");
                             mDatabase.child("user_info").child(userid).setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>(){
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {

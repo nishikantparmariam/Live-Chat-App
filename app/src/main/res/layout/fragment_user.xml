@@ -5,9 +5,24 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.UserFragment"
     android:background="#FFF">
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="@string/cautsc"
+        android:textAlignment="center"
+        android:textSize="10sp"
+        android:id="@+id/cautsc"/>
+    <TextView
+        android:id="@+id/text_if_no_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_below="@+id/cautsc"
+        android:textSize="15sp" />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
+        android:layout_below="@+id/cautsc"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

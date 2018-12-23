@@ -22,9 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import parmar.nishikant.livechatapp.Fragments.ChatsFragment;
 import parmar.nishikant.livechatapp.Fragments.SUserFragment;
@@ -94,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
 
     protected void onResume() {
+        check="NO";
         super.onResume();
         try {
             reference = FirebaseDatabase.getInstance().getReference("user_info").child(firebaseUser.getUid());
@@ -122,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
                 //break;
             case R.id.myprofile:
+                check = "YES";
                 startActivity(new Intent(MainActivity.this,ProfileActivity.class));
                 return true;
                 //break;

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MessageActivity">
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/toolbar"
+            android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/MenuStyle"
+            app:subtitleTextColor="#FFFFFF"
+            app:titleTextColor="#FFFFFF"
+            android:background="@color/colorPrimary"
+            >
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/xprofileimage"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="15dp" />
+            <TextView
+                android:id="@+id/xfullname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="0dp"
+                android:layout_toEndOf="@+id/oneuserpp"
+                android:layout_toRightOf="@+id/oneuserpp"
+                android:text="Username"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/xpoints"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="11dp"
+                android:layout_marginLeft="11dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:layout_toEndOf="@+id/oneuserpp"
+                android:layout_toRightOf="@+id/oneuserpp"
+                android:text="45 Points"
+                android:textColor="#ccf2ff"
+                android:textSize="15sp" />
+            <TextView
+                android:id="@+id/xstatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:layout_toEndOf="@+id/oneuserpp"
+                android:layout_toRightOf="@+id/oneuserpp"
+                android:layout_gravity="right"
+                android:textAlignment="viewEnd"
+                android:layout_marginEnd="15dp"
+                android:textColor="#007700"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+</RelativeLayout>

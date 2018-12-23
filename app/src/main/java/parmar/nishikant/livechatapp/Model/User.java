@@ -6,16 +6,26 @@ public class User {
     private String dpURL;
     private String points;
     private String status;
-    public User(String id,String fullname,String dpURL,String points,String status) {
+    private String show_status;
+    public User(String id,String fullname,String dpURL,String points,String status,String show_status) {
         this.id= id;
         this.fullname = fullname;
         this.dpURL = dpURL;
         this.points = points;
         this.status=status;
+        this.show_status=show_status;
     }
     public User()
     {
 
+    }
+
+    public String getShow_status() {
+        return show_status;
+    }
+
+    public void setShow_status(String show_status) {
+        this.show_status = show_status;
     }
 
     public String getStatus() {
