@@ -25,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 import parmar.nishikant.livechatapp.Fragments.ChatsFragment;
+import parmar.nishikant.livechatapp.Fragments.MyProfileFragment;
 import parmar.nishikant.livechatapp.Fragments.SUserFragment;
 import parmar.nishikant.livechatapp.Fragments.UserFragment;
 import parmar.nishikant.livechatapp.Model.User;
@@ -32,15 +33,14 @@ import parmar.nishikant.livechatapp.Model.User;
 public class MainActivity extends AppCompatActivity {
     CircleImageView dpimg;
     TextView fullname;
-    FirebaseUser firebaseUser;
-    DatabaseReference reference;
+    FirebaseUser firebaseUser,firebaseUser2;
+    DatabaseReference reference,reference2;
     Toolbar toolbar;
-    String check;
+    String check = "YES";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        check="NO";
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Live Chat App");
@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         fullname = findViewById(R.id.FN);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("user_info").child(firebaseUser.getUid());
-        reference.child("status").setValue("online");
         ValueEventListener userinfolistner = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -72,35 +71,28 @@ public class MainActivity extends AppCompatActivity {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFragment(new ChatsFragment(),"Chats");
         viewPagerAdapter.addFragment(new UserFragment(),"Users");
-        viewPagerAdapter.addFragment(new SUserFragment(),"Star Users");
+        viewPagerAdapter.addFragment(new MyProfileFragment(),"Me");
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }
     @Override
     protected void onPause() {
         super.onPause();
-            if(!check.equals("YES")){
-            try {
-                reference= FirebaseDatabase.getInstance().getReference();
-                String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                reference.child("user_info").child(user_id).child("status").setValue("offline");
-            } finally {
-                int no_work = 0;
-            }
-        }
+        setStatus("offline");
     }
     @Override
 
     protected void onResume() {
-        check="NO";
         super.onResume();
-        try {
-            reference = FirebaseDatabase.getInstance().getReference("user_info").child(firebaseUser.getUid());
-            reference.child("status").setValue("online");
-            //Toast.makeText(this, "ONLINE", Toast.LENGTH_SHORT).show();
-        } finally {
-            int no_work = 0;
-        }
+        setStatus("online");
+        check="YES";
+    }
+    private void setStatus(String s){
+        if(!check.equals("NO")){
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("user_info/"+firebaseUser.getUid()).child("status");
+        reference.setValue(s); }
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -111,17 +103,14 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.loginBtn:
-                check = "YES";
-                reference = FirebaseDatabase.getInstance().getReference("user_info").child(firebaseUser.getUid());
-                reference.child("status").setValue("offline");
-                FirebaseAuth.getInstance().signOut();
+                check = "NO";
+                FirebaseDatabase.getInstance().getReference("user_info/"+FirebaseAuth.getInstance().getCurrentUser().getUid()).child("status").setValue("offline");
                 Toast.makeText(MainActivity.this, "Logging out...", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(MainActivity.this,StartActivity.class));
-                finish();
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(MainActivity.this,StartActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 return true;
                 //break;
             case R.id.myprofile:
-                check = "YES";
                 startActivity(new Intent(MainActivity.this,ProfileActivity.class));
                 return true;
                 //break;

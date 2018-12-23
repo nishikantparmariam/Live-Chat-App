@@ -4,10 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MessageActivity">
+    tools:context=".MessageActivity"
+    android:background="#E9EBEE">
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/bar_layout">
         <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,7 +39,7 @@
                 android:layout_toEndOf="@+id/oneuserpp"
                 android:layout_toRightOf="@+id/oneuserpp"
                 android:text="Username"
-                android:textColor="#ffffff"
+                android:textColor="#FFFFFF"
                 android:textSize="20sp" />
 
             <TextView
@@ -72,4 +74,50 @@
 
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
+
+
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/bar_layout"
+        android:layout_above="@+id/bottomc"
+        android:paddingRight="13dp"
+        android:paddingLeft="13dp"
+        android:id="@+id/recycler_view"
+        app:stackFromEnd="true"/>
+
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btnbg"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="6dp"
+        android:id="@+id/bottomc"
+        android:padding="0dp">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_message"
+            android:background="@android:color/transparent"
+            android:layout_toLeftOf="@id/btn_send"
+            android:hint="Type message here..."
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="9dp"
+            android:layout_centerVertical="true"/>
+        <ImageButton
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/btn_send"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="13dp"
+            android:background="@mipmap/sendbtnimg"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
 </RelativeLayout>
