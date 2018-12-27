@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -19,10 +17,10 @@ import parmar.nishikant.livechatapp.MessageActivity;
 import parmar.nishikant.livechatapp.Model.User;
 import parmar.nishikant.livechatapp.R;
 
-public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
+public class searchUserAdapter extends RecyclerView.Adapter<searchUserAdapter.ViewHolder> {
     private Context mContext;
     private List<User> mUsers;
-    public UserAdapter(Context mContext, List<User> mUsers){
+    public searchUserAdapter(Context mContext, List<User> mUsers){
         this.mUsers = mUsers;
         this.mContext= mContext;
     }
@@ -30,7 +28,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,int viewType){
         View view = LayoutInflater.from(mContext).inflate(R.layout.oneuser ,parent,false);
-        return new UserAdapter.ViewHolder(view);
+        return new searchUserAdapter.ViewHolder(view);
     }
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder,int position){
@@ -50,7 +48,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         } else {
             Glide.with(mContext).load(user.getDpURL()).into(holder.oneuserpp);
         }
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,7 +63,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         int positiontoreturn = 0; //random position
 
         for (User tempuser:mUsers
-             ) {
+                ) {
             if(tempuser.getId().equals(userKey)){
                 //usertoreturn = tempuser;
                 positiontoreturn = i;

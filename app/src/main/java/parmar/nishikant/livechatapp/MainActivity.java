@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 import parmar.nishikant.livechatapp.Fragments.ChatsFragment;
 import parmar.nishikant.livechatapp.Fragments.MyProfileFragment;
-import parmar.nishikant.livechatapp.Fragments.SUserFragment;
 import parmar.nishikant.livechatapp.Fragments.UserFragment;
 import parmar.nishikant.livechatapp.Model.User;
 
@@ -70,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         ViewPager viewPager = findViewById(R.id.view_pager);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFragment(new ChatsFragment(),"Chats");
-        viewPagerAdapter.addFragment(new UserFragment(),"Users");
+        viewPagerAdapter.addFragment(new UserFragment(),"Find");
         viewPagerAdapter.addFragment(new MyProfileFragment(),"Me");
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -78,21 +77,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        setStatus("offline");
+        if(!check.equals("NO")){
+            firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+            reference = FirebaseDatabase.getInstance().getReference("user_info/"+firebaseUser.getUid()).child("status");
+            reference.setValue("offline"); }
     }
     @Override
-
     protected void onResume() {
         super.onResume();
-        setStatus("online");
-        check="YES";
-    }
-    private void setStatus(String s){
-        if(!check.equals("NO")){
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("user_info/"+firebaseUser.getUid()).child("status");
-        reference.setValue(s); }
-
+        reference.setValue("online");
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -107,7 +102,8 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseDatabase.getInstance().getReference("user_info/"+FirebaseAuth.getInstance().getCurrentUser().getUid()).child("status").setValue("offline");
                 Toast.makeText(MainActivity.this, "Logging out...", Toast.LENGTH_SHORT).show();
                 FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(MainActivity.this,StartActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                startActivity(new Intent(MainActivity.this,StartActivity.class));
+                finish();
                 return true;
                 //break;
             case R.id.myprofile:

@@ -53,7 +53,11 @@
         android:layout_centerVertical="true"
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
-        android:textColor="#007700"
-        android:text="off"
-        android:textStyle="bold" />
+        android:textColor="#fff"
+        android:paddingRight="5dp"
+        android:paddingLeft="5dp"
+        android:paddingBottom="1dp"
+        android:text="online"
+        android:textStyle="bold"
+        android:background="@drawable/greenbg"/>
 </RelativeLayout>

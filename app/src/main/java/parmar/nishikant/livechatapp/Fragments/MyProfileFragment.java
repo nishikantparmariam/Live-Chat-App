@@ -37,6 +37,7 @@ import com.google.firebase.storage.UploadTask;
 import java.net.URI;
 import java.net.URL;
 
+import parmar.nishikant.livechatapp.GlideApp;
 import parmar.nishikant.livechatapp.Model.User;
 import parmar.nishikant.livechatapp.R;
 
@@ -72,7 +73,10 @@ public class MyProfileFragment extends Fragment {
                 }
                 else {
                     try{
-                        Glide.with(getActivity()).load(user.getDpURL()).into(pimgdp);
+                        if(getActivity()!=null){
+                            Glide.with(getContext()).load(user.getDpURL()).into(pimgdp);
+                        }
+
                     }finally {
                         int n=5;
                     }

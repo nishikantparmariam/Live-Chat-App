@@ -38,26 +38,13 @@
                 android:layout_marginBottom="0dp"
                 android:layout_toEndOf="@+id/oneuserpp"
                 android:layout_toRightOf="@+id/oneuserpp"
-                android:text="Username"
+                android:text="Username\n45 Points"
                 android:textColor="#FFFFFF"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/xpoints"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="11dp"
-                android:layout_marginLeft="11dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="0dp"
-                android:layout_toEndOf="@+id/oneuserpp"
-                android:layout_toRightOf="@+id/oneuserpp"
-                android:text="45 Points"
-                android:textColor="#ccf2ff"
-                android:textSize="15sp" />
-            <TextView
                 android:id="@+id/xstatus"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="0dp"
                 android:layout_marginLeft="0dp"
@@ -68,9 +55,13 @@
                 android:layout_gravity="right"
                 android:textAlignment="viewEnd"
                 android:layout_marginEnd="15dp"
-                android:textColor="#007700"
-                android:textSize="15sp"
-                android:textStyle="bold"/>
+                android:textColor="#fff"
+                android:paddingRight="5dp"
+                android:paddingLeft="5dp"
+                android:paddingBottom="1dp"
+                android:text="online"
+                android:textStyle="bold"
+                android:background="@drawable/greenbg"/>
 
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
@@ -88,14 +79,42 @@
         app:stackFromEnd="true"/>
 
 
-
+    <TextView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:textColor="#FFFFFF"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/toBottom"
+        android:background="@drawable/"
+        android:layout_marginBottom="1dp"
+        android:layout_above="@+id/bottomc"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:paddingRight="5dp"
+        android:layout_centerHorizontal="true"
+        android:paddingLeft="5dp"
+        android:paddingBottom="2dp"
+        android:paddingTop="1dp"
+        android:id="@+id/typingstatus"
+        android:text="Typing..."
+        android:background="@drawable/greenbg"
+        android:layout_marginBottom="1dp"
+        android:visibility="gone"
+        android:layout_above="@+id/bottomc"
+        />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/btnbg"
         android:layout_alignParentBottom="true"
-        android:layout_margin="6dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="4dp"
         android:id="@+id/bottomc"
         android:padding="0dp">
         <EditText
