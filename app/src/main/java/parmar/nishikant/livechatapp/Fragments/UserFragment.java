@@ -63,7 +63,6 @@ public class UserFragment extends Fragment {
         offlineUsers = new ArrayList<>();
         onlineUsers = new ArrayList<>();
         final List<User> res_users =  new ArrayList<>();
-
         final EditText search_text = view.findViewById(R.id.search_text);
         final TextView close_btn = view.findViewById(R.id.close_btn);
         final TextView srchre  = view.findViewById(R.id.srchre);
@@ -98,13 +97,25 @@ public class UserFragment extends Fragment {
                     close_btn.setBackgroundResource(R.mipmap.close_2);
                     int result_count=0;
                     res_users.clear();
-                    for(User tempuser:mUsers){
+                    if(search_.startsWith("@")&&search_.contains("@on")){
+                        for(User tempuser:mUsers){
 
-                        if(tempuser.getFullname().toLowerCase().contains(search_)||tempuser.getPoints().toLowerCase().contains(search_)||tempuser.getFullname().toLowerCase().indexOf(search_)!=(-1)||tempuser.getPoints().toLowerCase().indexOf(search_)!=(-1)) {
-                            result_count++;
-                            res_users.add(tempuser);
+                            if(tempuser.getStatus().equals("online")) {
+                                result_count++;
+                                res_users.add(tempuser);
+                            }
                         }
                     }
+                    else {
+                        for(User tempuser:mUsers){
+
+                            if(tempuser.getFullname().toLowerCase().contains(search_)||tempuser.getPoints().toLowerCase().contains(search_)||tempuser.getFullname().toLowerCase().indexOf(search_)!=(-1)||tempuser.getPoints().toLowerCase().indexOf(search_)!=(-1)) {
+                                result_count++;
+                                res_users.add(tempuser);
+                            }
+                        }
+                    }
+
                     srchre.setVisibility(View.VISIBLE);
                     if(result_count==0){
                         srchre.setText("No results found.");

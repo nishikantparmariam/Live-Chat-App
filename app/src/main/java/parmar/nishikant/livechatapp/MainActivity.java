@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         ViewPager viewPager = findViewById(R.id.view_pager);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPagerAdapter.addFragment(new ChatsFragment(),"Chats");
+        viewPagerAdapter.addFragment(new ChatsFragment(),"Messages");
         viewPagerAdapter.addFragment(new UserFragment(),"Find");
         viewPagerAdapter.addFragment(new MyProfileFragment(),"Me");
         viewPager.setAdapter(viewPagerAdapter);
@@ -106,10 +106,11 @@ public class MainActivity extends AppCompatActivity {
                 finish();
                 return true;
                 //break;
-            case R.id.myprofile:
-                startActivity(new Intent(MainActivity.this,ProfileActivity.class));
-                return true;
                 //break;
+            case R.id.createNewGroup:
+                startActivity(new Intent(MainActivity.this,CreateNewGroup.class));
+                //finish();
+                return true;
         }
         return false;
     }

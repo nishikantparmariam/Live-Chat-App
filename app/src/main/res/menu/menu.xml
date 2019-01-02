@@ -4,12 +4,11 @@
     android:color="#FFFFFF"
     >
     <item
-        android:id="@+id/myprofile"
-        android:title="My Profile"
+        android:id="@+id/createNewGroup"
+        android:title="Create New Group"
         app:showAsAction="never"/>
     <item
         android:id="@+id/loginBtn"
         android:title="Logout"
         app:showAsAction="never"/>
-
 </menu>

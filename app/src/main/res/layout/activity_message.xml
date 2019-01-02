@@ -5,11 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MessageActivity"
-    android:background="#E9EBEE">
+    android:background="#e9ebee">
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/bar_layout">
+        android:id="@+id/bar_layout"
+        app:elevation="3dp">
         <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -80,14 +81,17 @@
 
 
     <TextView
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginRight="20dp"
         android:textColor="#FFFFFF"
         android:layout_centerHorizontal="true"
         android:id="@+id/toBottom"
-        android:background="@drawable/"
+        android:visibility="gone"
+        android:background="@mipmap/downbtn"
         android:layout_marginBottom="1dp"
         android:layout_above="@+id/bottomc"
+        android:layout_alignParentRight="true"
         />
     <TextView
         android:layout_width="wrap_content"

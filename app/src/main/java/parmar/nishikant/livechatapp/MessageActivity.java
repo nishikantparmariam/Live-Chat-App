@@ -1,5 +1,4 @@
 package parmar.nishikant.livechatapp;
-
 import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -19,9 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -31,14 +28,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import parmar.nishikant.livechatapp.Adapter.MessageAdapter;
 import parmar.nishikant.livechatapp.Adapter.UserAdapter;
@@ -51,7 +46,7 @@ public class MessageActivity extends AppCompatActivity {
     TextView xfullname, xpoints, xstatus;
     EditText  msgsend;
     FirebaseUser firebaseUser;
-    DatabaseReference reference,reference2,reference3,reference4;
+    DatabaseReference reference,reference2,reference3,reference4,reference77;
     Intent intent;
     ValueEventListener seenlistener;
     Toolbar toolbar;
@@ -63,6 +58,11 @@ public class MessageActivity extends AppCompatActivity {
     public static class MyGlobals {
         public static String chat_key_final;
         public static String typeofchat;
+        public static String fful;
+        public static String ffdp;
+        public static User xuser;
+        public static int ffpoints;
+        public static int points_for_starting_new_chat=5;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,106 +94,176 @@ public class MessageActivity extends AppCompatActivity {
         intent = getIntent();
         final String xuseruid = intent.getStringExtra("userid");
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        //get the chat key of these two users ----
-        reference2 = FirebaseDatabase.getInstance().getReference("chats");
-        reference2.addListenerForSingleValueEvent(new ValueEventListener() {
+        reference = FirebaseDatabase.getInstance().getReference("user_info").child(xuseruid);
+        reference77 = FirebaseDatabase.getInstance().getReference("user_info").child(firebaseUser.getUid());
+        reference77.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String chat_key = "not_found";
-                int no_of_members = 0;
-                for(DataSnapshot sp:dataSnapshot.getChildren()){
+                String fful = dataSnapshot.child("fullname").getValue().toString();
+                String ffdp = dataSnapshot.child("dpURL").getValue().toString();
+                int ffpoints = Integer.parseInt(dataSnapshot.child("points").getValue().toString());
+                MyGlobals.fful = fful;
+                MyGlobals.ffdp = ffdp;
+                MyGlobals.ffpoints = ffpoints;
+            }
 
-                    List<String> members_ = new ArrayList<>();
-                    for(DataSnapshot sp2:sp.child("members").getChildren()){
-                        members_.add(sp2.getValue().toString());
-                        no_of_members++;
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        if(!xuseruid.equals("notonetoone")){
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    User xuser = dataSnapshot.getValue(User.class);
+                    MyGlobals.xuser = xuser;
+                    xfullname.setText(xuser.getFullname()+"\n"+xuser.getPoints()+" Points");
+                    if(xuser.getStatus().equals("online")){
+                        xstatus.setVisibility(View.VISIBLE);
+                        xstatus.setText(xuser.getStatus());
                     }
-                    if(no_of_members==2){
+                    else {
+                        xstatus.setText("");
+                        xstatus.setVisibility(View.GONE);
+                    }
 
-                        if((members_.get(0).equals(xuseruid)&&members_.get(1).equals(firebaseUser.getUid()))||(members_.get(1).equals(xuseruid)&&members_.get(0).equals(firebaseUser.getUid()))){
-                            chat_key = sp.getKey();
-                            //Toast.makeText(MessageActivity.this, "Found chat.", Toast.LENGTH_SHORT).show();
+                    if(xuser.getDpURL().equals("default")){
+                        xdp.setImageResource(R.drawable.userdp);
+                    }
+                    else {
+                        Glide.with(getApplicationContext()).load(xuser.getDpURL()).into(xdp);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+
+        //get the chat key of these two users ----
+        if(!xuseruid.equals("notonetoone")) {
+            DatabaseReference reference44 = FirebaseDatabase.getInstance().getReference("chats");
+            reference44.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    long ccc = dataSnapshot.getChildrenCount();
+                    int cc = (int) ccc;
+                    int lc=1;
+                    if(cc==0){
+                        DatabaseReference reference2 = FirebaseDatabase.getInstance().getReference("chats");
+                        final String chat_key_final = reference2.push().getKey();
+                        DatabaseReference reference222 = FirebaseDatabase.getInstance().getReference("user_info");
+                        reference222.child(xuseruid).child("mychats").child(chat_key_final).setValue(chat_key_final);
+
+                        reference222.child(firebaseUser.getUid()).child("mychats").child(chat_key_final).setValue(chat_key_final);
+                        MyGlobals.chat_key_final=chat_key_final;
+                        HashMap<String,Object> value_to_intialise_chat = new HashMap<>();
+                        value_to_intialise_chat.put("chat_key",chat_key_final);
+                        HashMap<String,Object> members_ = new HashMap<>();
+                        members_.put(xuseruid,xuseruid);
+                        members_.put(firebaseUser.getUid(),firebaseUser.getUid());
+                        value_to_intialise_chat.put("members",members_);
+                        value_to_intialise_chat.put("typeofchat","oneToOne");
+                        HashMap<String,Object> lm = new HashMap<>();
+                        lm.put("message","New Chat");
+                        value_to_intialise_chat.put("last_message",lm);
+                        HashMap<String,Object> ss = new HashMap<>();
+                        ss.put(firebaseUser.getUid(),MyGlobals.xuser.getFullname());
+                        ss.put(xuseruid,MyGlobals.fful);
+                        value_to_intialise_chat.put("chatName",ss);
+                        HashMap<String,Object> ss2 = new HashMap<>();
+                        ss2.put(firebaseUser.getUid(),MyGlobals.xuser.getDpURL());
+                        ss2.put(xuseruid,MyGlobals.ffdp);
+                        value_to_intialise_chat.put("dpURL",ss2);
+                        reference2.child(chat_key_final).setValue(value_to_intialise_chat);
+                        Toast.makeText(MessageActivity.this, "New chat established.", Toast.LENGTH_SHORT).show();
+                        reference222.child(firebaseUser.getUid()).child("points").setValue(Integer.toString(MyGlobals.ffpoints+MyGlobals.points_for_starting_new_chat));
+                        reference222.child(xuseruid).child("points").setValue(Integer.toString(Integer.parseInt(MyGlobals.xuser.getPoints())+MyGlobals.points_for_starting_new_chat));
+                        Toast.makeText(MessageActivity.this, Integer.toString(MyGlobals.points_for_starting_new_chat)+" Points added in your and "+MyGlobals.xuser.getFullname()+"'s account for starting new chat.", Toast.LENGTH_LONG).show();
+                        listenForChanges(MyGlobals.chat_key_final,2);
+                        seenMessage(MyGlobals.chat_key_final);
+                    }
+                    for(DataSnapshot sp:dataSnapshot.getChildren()){
+                        List<String> members = new ArrayList<>();
+                        MyGlobals.chat_key_final="NF";
+                        for(DataSnapshot sp2:sp.child("members").getChildren()){
+                            members.add(sp2.getValue().toString());
+                        }
+                        if(members.contains(xuseruid)&&members.contains(firebaseUser.getUid())&&members.size()==2){
+                            //Toast.makeText(MessageActivity.this, "Found chat", Toast.LENGTH_SHORT).show();
+                            MyGlobals.chat_key_final=sp.getKey();
+                            listenForChanges(MyGlobals.chat_key_final,2);
+                            seenMessage(MyGlobals.chat_key_final);
                             break;
                         }
-                        else {
-                            chat_key = "not_found";
-                        }
-                    }
+                        if(lc==cc){
+                            if(MyGlobals.chat_key_final.equals("NF")){
+                                DatabaseReference reference2 = FirebaseDatabase.getInstance().getReference("chats");
+                                final String chat_key_final = reference2.push().getKey();
+                                DatabaseReference reference222 = FirebaseDatabase.getInstance().getReference("user_info");
+                                reference222.child(xuseruid).child("mychats").child(chat_key_final).setValue(chat_key_final);
+                                reference222.child(firebaseUser.getUid()).child("mychats").child(chat_key_final).setValue(chat_key_final);
+                                MyGlobals.chat_key_final=chat_key_final;
+                                HashMap<String,Object> value_to_intialise_chat = new HashMap<>();
+                                value_to_intialise_chat.put("chat_key",chat_key_final);
+                                HashMap<String,Object> members_ = new HashMap<>();
+                                members_.put(xuseruid,xuseruid);
+                                members_.put(firebaseUser.getUid(),firebaseUser.getUid());
+                                value_to_intialise_chat.put("members",members_);
+                                value_to_intialise_chat.put("typeofchat","oneToOne");
+                                HashMap<String,Object> lm = new HashMap<>();
+                                lm.put("message","New Chat");
+                                value_to_intialise_chat.put("last_message",lm);
+                                HashMap<String,Object> ss = new HashMap<>();
+                                ss.put(firebaseUser.getUid(),MyGlobals.xuser.getFullname());
+                                ss.put(xuseruid,MyGlobals.fful);
+                                value_to_intialise_chat.put("chatName",ss);
+                                HashMap<String,Object> ss2 = new HashMap<>();
+                                ss2.put(firebaseUser.getUid(),MyGlobals.xuser.getDpURL());
+                                ss2.put(xuseruid,MyGlobals.ffdp);
+                                value_to_intialise_chat.put("dpURL",ss2);
+                                reference2.child(chat_key_final).setValue(value_to_intialise_chat);
+                                Toast.makeText(MessageActivity.this, "New chat established.", Toast.LENGTH_SHORT).show();
+                                reference222.child(firebaseUser.getUid()).child("points").setValue(Integer.toString(MyGlobals.ffpoints+MyGlobals.points_for_starting_new_chat));
+                                reference222.child(xuseruid).child("points").setValue(Integer.toString(Integer.parseInt(MyGlobals.xuser.getPoints())+MyGlobals.points_for_starting_new_chat));
+                                Toast.makeText(MessageActivity.this, Integer.toString(MyGlobals.points_for_starting_new_chat)+" Points added in your and "+MyGlobals.xuser.getFullname()+"'s account for starting new chat.", Toast.LENGTH_LONG).show();
+                                listenForChanges(MyGlobals.chat_key_final,2);
+                                seenMessage(MyGlobals.chat_key_final);
 
+                            }
+                        }
+                        lc++;
+                    }
                 }
 
-                //make new chat if not found
-                if(chat_key.equals("not_found")){
-                    final String chat_key_final = reference2.push().getKey();
-                    MyGlobals.chat_key_final=chat_key_final;
-                    HashMap<String,Object> value_to_intialise_chat = new HashMap<>();
-                    value_to_intialise_chat.put("chat_key",chat_key_final);
-                    HashMap<String,Object> members = new HashMap<>();
-                    members.put(xuseruid,xuseruid);
-                    members.put(firebaseUser.getUid(),firebaseUser.getUid());
-                    value_to_intialise_chat.put("members",members);
-                    value_to_intialise_chat.put("typeofchat","oneToOne");
-                    reference2.child(chat_key_final).setValue(value_to_intialise_chat);
-                    Toast.makeText(MessageActivity.this, "New chat established.", Toast.LENGTH_SHORT).show();
-                    listenForChanges(MyGlobals.chat_key_final,no_of_members);
-                    seenMessage(MyGlobals.chat_key_final);
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+
+
+
+        btnsend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String message = msgsend.getText().toString().trim();
+                if(message.equals("")){
+                    Toast.makeText(MessageActivity.this, "Please enter some message", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    MyGlobals.chat_key_final=chat_key;
-                    listenForChanges(MyGlobals.chat_key_final,no_of_members);
-                    seenMessage(MyGlobals.chat_key_final);
+                    sendMessage(MyGlobals.chat_key_final ,firebaseUser.getUid(),xuseruid,message);
                 }
-                btnsend.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String message = msgsend.getText().toString().trim();
-                        if(message.equals("")){
-                            Toast.makeText(MessageActivity.this, "Please enter some message", Toast.LENGTH_SHORT).show();
-                        }
-                        else {
-                            sendMessage(MyGlobals.chat_key_final ,firebaseUser.getUid(),xuseruid,message);
-                        }
-                        msgsend.setText("");
-
-                    }
-                });
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                msgsend.setText("");
 
             }
         });
 
-        reference = FirebaseDatabase.getInstance().getReference("user_info").child(xuseruid);
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User xuser = dataSnapshot.getValue(User.class);
-                xfullname.setText(xuser.getFullname()+"\n"+xuser.getPoints()+" Points");
-                if(xuser.getStatus().equals("online")){
-                    xstatus.setVisibility(View.VISIBLE);
-                    xstatus.setText(xuser.getStatus());
-                }
-                else {
-                    xstatus.setText("");
-                    xstatus.setVisibility(View.GONE);
-                }
 
-                if(xuser.getDpURL().equals("default")){
-                    xdp.setImageResource(R.drawable.userdp);
-                }
-                else {
-                    Glide.with(getApplicationContext()).load(xuser.getDpURL()).into(xdp);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
         final DatabaseReference reference22 = FirebaseDatabase.getInstance().getReference("typing_status");
         msgsend.addTextChangedListener(new TextWatcher() {
             @Override
@@ -243,9 +313,10 @@ public class MessageActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        reference4.removeEventListener(seenlistener);
-        setStatus("offline");
         MyGlobals.chat_key_final=" ";
+        reference4.removeEventListener(seenlistener);
+
+        setStatus("offline");
     }
     @Override
     protected void onResume() {
@@ -297,6 +368,7 @@ public class MessageActivity extends AppCompatActivity {
         String pushkey = reference.child("messages").push().getKey();
         hashMap.put("key",pushkey);
         reference.child("chats/"+chat_key+"/messages").child(pushkey).setValue(hashMap);
+        reference.child("chats/"+chat_key+"/last_message").setValue(hashMap);
     }
     private void listenForChanges(String chat_key,int no_of_members){
         ChildEventListener childEventListener = new ChildEventListener() {
@@ -342,6 +414,7 @@ public class MessageActivity extends AppCompatActivity {
         recyclerView.setAdapter(messageAdapter);
         DatabaseReference reference2 = FirebaseDatabase.getInstance().getReference("chats/"+chat_key+"/messages");
         reference2.addChildEventListener(childEventListener);
+
     }
 
     private void addSingleItem(Message newmessage){

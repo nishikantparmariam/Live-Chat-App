@@ -36,6 +36,8 @@ import com.google.firebase.storage.UploadTask;
 
 import java.net.URI;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import parmar.nishikant.livechatapp.GlideApp;
 import parmar.nishikant.livechatapp.Model.User;
@@ -128,9 +130,39 @@ public class MyProfileFragment extends Fragment {
                 public void onComplete(@NonNull Task<Uri> task) {
                     if(task.isSuccessful()){
                         Uri downloaduri = task.getResult();
-                        String mUri = downloaduri.toString();
+                        final String mUri = downloaduri.toString();
                         reference2 = FirebaseDatabase.getInstance().getReference("user_info").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("dpURL");
                         reference2.setValue(mUri);
+                        //change pp everywhere
+                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("chats");
+                        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for(DataSnapshot sp:dataSnapshot.getChildren()){
+                                    if(sp.child("typeofchat").getValue().toString().equals("oneToOne")){
+                                        String chat_id = sp.child("chat_key").getValue().toString();
+                                        List<String> me = new ArrayList<>();
+                                        for(DataSnapshot sp2:sp.child("members").getChildren()){
+                                            me.add(sp2.getValue().toString());
+                                        }
+                                        if(me.contains(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                                            for(DataSnapshot sp3:sp.child("dpURL").getChildren()){
+                                                if(!sp3.getKey().toString().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                                                    String ouid = sp3.getKey().toString();
+                                                    DatabaseReference reference44 = FirebaseDatabase.getInstance().getReference("chats/"+chat_id+"/dpURL/"+ouid+"");
+                                                    reference44.setValue(mUri);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
                         pd.dismiss();
                     } else {
                         Toast.makeText(getContext(), "Could not upload.", Toast.LENGTH_SHORT).show();
