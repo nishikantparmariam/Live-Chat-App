@@ -6,13 +6,13 @@
     tools:context=".Fragments.MyProfileFragment"
     android:background="#ffffff">
 
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="15dp"
             android:paddingTop="2dp"
             android:background="#f5f5f5"
+            android:id="@+id/profilebox"
             >
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/pimgdp"
@@ -54,4 +54,12 @@
                 android:textSize="21sp" />
         </RelativeLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Chat with more people to earn more and more points."
+        android:textColor="#000"
+        android:layout_below="@+id/profilebox"
+        android:layout_marginTop="10dp"/>
 </RelativeLayout>
