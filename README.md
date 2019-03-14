@@ -25,7 +25,7 @@ Working Snapshots -
 Live Chat is a chatting android mobile application which sends information in real time. It provides an elegant, simple and easy to use UI. The app has a very special feature for engaging and increasing users (Point System where every user earns points for using the app).
 The app is designed in Android Studio, the back-end of the app is coded in JAVA while the front-end uses XML. The app uses Google’s Firebase for authentication, managing users and real-time data syncing.
 
-Salient Features
+#Salient Features
 1) It provides a secure login, sign-up and resetting password system. Hence no user can use the app without
 logging in.
 2) It collects information like full name, email, password, and while signing up it allows exactly one user
