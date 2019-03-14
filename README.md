@@ -5,7 +5,7 @@ A real time chatting app.
 Project Owner:
 Nishikant Parmar
 B.Tech 18, Computer Science Engineering
-nishikant.parmar@iitgn.ac.in
+(nishikant.parmar@iitgn.ac.in)
 
 <img src="https://github.com/nishikantparmariam/LiveChatApp/blob/master/app/src/main/res/drawable/logo.png" width="100" height="100"/>
 
