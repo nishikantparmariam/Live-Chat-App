@@ -7,11 +7,6 @@ Nishikant Parmar
 B.Tech 18, Computer Science Engineering
 (nishikant.parmar@iitgn.ac.in)
 
-Under the supervision of:
-Technical Council, IIT Gandhinagar
-(Winter Projects 2018)
-http://students.iitgn.ac.in/tech-council/
-
 <img src="https://github.com/nishikantparmariam/LiveChatApp/blob/master/app/src/main/res/drawable/logo.png" width="100" height="100"/>
 
 APK link -
