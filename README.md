@@ -6,7 +6,6 @@ A real time chatting app.
 
 APK link -
 https://github.com/nishikantparmariam/LiveChat_App/blob/master/app/release/app-release.apk
-(Right now slightly older version relative to snapshots)
 
 Working Snapshots - 
 
